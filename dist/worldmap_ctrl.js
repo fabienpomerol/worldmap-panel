@@ -37,7 +37,6 @@ System.register(['app/plugins/sdk', 'app/core/time_series2', 'app/core/utils/kbn
 
   return {
     setters: [function (_appPluginsSdk) {
-      /* eslint import/no-extraneous-dependencies: 0 */
       MetricsPanelCtrl = _appPluginsSdk.MetricsPanelCtrl;
     }, function (_appCoreTime_series) {
       TimeSeries = _appCoreTime_series.default;
@@ -95,7 +94,8 @@ System.register(['app/plugins/sdk', 'app/core/time_series2', 'app/core/utils/kbn
         'North America': { mapCenterLatitude: 40, mapCenterLongitude: -100 },
         'Europe': { mapCenterLatitude: 46, mapCenterLongitude: 14 },
         'West Asia': { mapCenterLatitude: 26, mapCenterLongitude: 53 },
-        'SE Asia': { mapCenterLatitude: 10, mapCenterLongitude: 106 }
+        'SE Asia': { mapCenterLatitude: 10, mapCenterLongitude: 106 },
+        'Last GeoHash': { mapCenterLatitude: 0, mapCenterLongitude: 0 }
       };
 
       WorldmapCtrl = function (_MetricsPanelCtrl) {
@@ -171,8 +171,8 @@ System.register(['app/plugins/sdk', 'app/core/time_series2', 'app/core/utils/kbn
             } else if (this.panel.locationData === 'table') {
               // .. Do nothing
             } else if (this.panel.locationData !== 'geohash') {
-                window.$.getJSON('public/plugins/grafana-worldmap-panel/data/' + this.panel.locationData + '.json').then(this.reloadLocations.bind(this));
-              }
+              window.$.getJSON('public/plugins/grafana-worldmap-panel/data/' + this.panel.locationData + '.json').then(this.reloadLocations.bind(this));
+            }
           }
         }, {
           key: 'reloadLocations',
@@ -214,7 +214,18 @@ System.register(['app/plugins/sdk', 'app/core/time_series2', 'app/core/utils/kbn
 
             this.updateThresholdData();
 
-            this.render();
+            if (this.data.length && this.panel.mapCenter === 'Last GeoHash') {
+              this.centerOnLastGeoHash();
+            } else {
+              this.render();
+            }
+          }
+        }, {
+          key: 'centerOnLastGeoHash',
+          value: function centerOnLastGeoHash() {
+            mapCenters[this.panel.mapCenter].mapCenterLatitude = _.last(this.data).locationLatitude;
+            mapCenters[this.panel.mapCenter].mapCenterLongitude = _.last(this.data).locationLongitude;
+            this.setNewMapCenter();
           }
         }, {
           key: 'onDataSnapshotLoad',
