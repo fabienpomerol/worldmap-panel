@@ -223,8 +223,8 @@ System.register(['app/plugins/sdk', 'app/core/time_series2', 'app/core/utils/kbn
         }, {
           key: 'centerOnLastGeoHash',
           value: function centerOnLastGeoHash() {
-            mapCenters[this.panel.mapCenter].mapCenterLatitude = _.last(this.data).locationLatitude;
-            mapCenters[this.panel.mapCenter].mapCenterLongitude = _.last(this.data).locationLongitude;
+            mapCenters[this.panel.mapCenter].mapCenterLatitude = _.first(this.data).locationLatitude;
+            mapCenters[this.panel.mapCenter].mapCenterLongitude = _.first(this.data).locationLongitude;
             this.setNewMapCenter();
           }
         }, {

@@ -149,8 +149,8 @@ export default class WorldmapCtrl extends MetricsPanelCtrl {
   }
 
   centerOnLastGeoHash() {
-    mapCenters[this.panel.mapCenter].mapCenterLatitude = _.last(this.data).locationLatitude;
-    mapCenters[this.panel.mapCenter].mapCenterLongitude = _.last(this.data).locationLongitude;
+    mapCenters[this.panel.mapCenter].mapCenterLatitude = _.first(this.data).locationLatitude;
+    mapCenters[this.panel.mapCenter].mapCenterLongitude = _.first(this.data).locationLongitude;
     this.setNewMapCenter();
   }
 
