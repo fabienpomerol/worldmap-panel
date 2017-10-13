@@ -84,7 +84,7 @@ System.register(['lodash', './libs/leaflet'], function (_export, _context) {
               var legendHtml = '';
               legendHtml += '<i style="background:' + _this.ctrl.panel.colors[0] + '"></i> ' + '&lt; ' + thresholds[0] + '<br>';
               for (var index = 0; index < thresholds.length; index += 1) {
-                legendHtml += '<i style="background:' + _this.getColor(thresholds[index] + 1) + '"></i> ' + thresholds[index] + (thresholds[index + 1] ? '&ndash;' + thresholds[index + 1] + '<br>' : '+');
+                legendHtml += '<i style="background:' + _this.ctrl.panel.colors[index + 1] + '"></i> ' + thresholds[index] + (thresholds[index + 1] ? '&ndash;' + thresholds[index + 1] + '<br>' : '+');
               }
               _this.legend._div.innerHTML = legendHtml;
             };
