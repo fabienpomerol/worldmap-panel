@@ -22,6 +22,8 @@ export default class WorldMap {
       .fitWorld()
       .zoomIn(parseInt(this.ctrl.panel.initialZoom, 10));
     this.map.panTo(mapCenter);
+    
+    L.control.scale().addTo(this.map);
 
     const selectedTileServer = tileServers[this.ctrl.tileServer];
     window.L.tileLayer(selectedTileServer.url, {
