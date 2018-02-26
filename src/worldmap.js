@@ -21,9 +21,8 @@ export default class WorldMap {
     this.map = window.L.map(this.mapContainer, {worldCopyJump: true, center: mapCenter})
       .fitWorld()
       .zoomIn(parseInt(this.ctrl.panel.initialZoom, 10));
-    this.map.panTo(mapCenter);
 
-    // L.control.scale().addTo(this.map);
+    window.L.control.scale({imperial: false}).addTo(this.map);
 
     const selectedTileServer = tileServers[this.ctrl.tileServer];
     window.L.tileLayer(selectedTileServer.url, {
