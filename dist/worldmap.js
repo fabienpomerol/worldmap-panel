@@ -58,6 +58,8 @@ System.register(['lodash', './libs/leaflet'], function (_export, _context) {
             this.map = window.L.map(this.mapContainer, { worldCopyJump: true, center: mapCenter }).fitWorld().zoomIn(parseInt(this.ctrl.panel.initialZoom, 10));
             this.map.panTo(mapCenter);
 
+            L.control.scale().addTo(this.map);
+
             var selectedTileServer = tileServers[this.ctrl.tileServer];
             window.L.tileLayer(selectedTileServer.url, {
               maxZoom: 18,
