@@ -104,6 +104,7 @@ System.register(['app/plugins/sdk', 'app/core/time_series2', 'app/core/utils/kbn
         'Europe': { mapCenterLatitude: 46, mapCenterLongitude: 14 },
         'West Asia': { mapCenterLatitude: 26, mapCenterLongitude: 53 },
         'SE Asia': { mapCenterLatitude: 10, mapCenterLongitude: 106 },
+        'First GeoHash': { mapCenterLatitude: 0, mapCenterLongitude: 0 },
         'Last GeoHash': { mapCenterLatitude: 0, mapCenterLongitude: 0 }
       };
 
@@ -238,9 +239,18 @@ System.register(['app/plugins/sdk', 'app/core/time_series2', 'app/core/utils/kbn
 
             if (this.data.length && this.panel.mapCenter === 'Last GeoHash') {
               this.centerOnLastGeoHash();
+            } else if (this.data.length && this.panel.mapCenter === 'First GeoHash') {
+              this.centerOnFirstGeoHash();
             } else {
               this.render();
             }
+          }
+        }, {
+          key: 'centerOnFirstGeoHash',
+          value: function centerOnFirstGeoHash() {
+            mapCenters[this.panel.mapCenter].mapCenterLatitude = _.first(this.data).locationLatitude;
+            mapCenters[this.panel.mapCenter].mapCenterLongitude = _.first(this.data).locationLongitude;
+            this.setNewMapCenter();
           }
         }, {
           key: 'centerOnLastGeoHash',
